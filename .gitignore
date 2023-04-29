@@ -28,4 +28,5 @@ plugins/banwords/lib/__pycache__
 !plugins/hello
 !plugins/role
 !plugins/keyword
+
 !plugins/linkai
