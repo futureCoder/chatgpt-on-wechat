@@ -6,16 +6,16 @@
     "bot",
     "@bot"
   ],
-  "single_chat_reply_prefix": "[bot] ",
+  "single_chat_reply_prefix": "Jason: ",
   "group_chat_prefix": [
-    "@bot"
+    "@Jason"
   ],
   "group_name_white_list": [
-    "ChatGPT测试群",
-    "ChatGPT测试群2"
+    "全村的希望",
+    "一家人"
   ],
   "group_chat_in_one_session": [
-    "ChatGPT测试群"
+    "全村的希望"
   ],
   "image_create_prefix": [
     "画",
