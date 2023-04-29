@@ -71,7 +71,7 @@ class WechatMPChannel(ChatChannel):
         loop.run_forever()
 
     async def delete_media(self, media_id):
-        logger.debug("[wechatmp] permanent media {} will be deleted in 10s".format(media_id))
+        logger.notice("[wechatmp] permanent media {} will be deleted in 10s".format(media_id))
         await asyncio.sleep(10)
         self.client.material.delete(media_id)
         logger.info("[wechatmp] permanent media {} has been deleted".format(media_id))
@@ -89,7 +89,7 @@ class WechatMPChannel(ChatChannel):
                     with open(voice_file_path, "rb") as f:
                         # support: <2M, <60s, mp3/wma/wav/amr
                         response = self.client.material.add("voice", f)
-                        logger.debug("[wechatmp] upload voice response: {}".format(response))
+                        logger.notice("[wechatmp] upload voice response: {}".format(response))
                         # 根据文件大小估计一个微信自动审核的时间，审核结束前返回将会导致语音无法播放，这个估计有待验证
                         f_size = os.fstat(f.fileno()).st_size
                         time.sleep(1.0 + 2 * f_size / 1024 / 1024)
@@ -113,7 +113,7 @@ class WechatMPChannel(ChatChannel):
                 content_type = "image/" + image_type
                 try:
                     response = self.client.material.add("image", (filename, image_storage, content_type))
-                    logger.debug("[wechatmp] upload image response: {}".format(response))
+                    logger.notice("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:
                     logger.error("[wechatmp] upload image failed: {}".format(e))
                     return
@@ -128,7 +128,7 @@ class WechatMPChannel(ChatChannel):
                 content_type = "image/" + image_type
                 try:
                     response = self.client.material.add("image", (filename, image_storage, content_type))
-                    logger.debug("[wechatmp] upload image response: {}".format(response))
+                    logger.notice("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:
                     logger.error("[wechatmp] upload image failed: {}".format(e))
                     return
@@ -164,7 +164,7 @@ class WechatMPChannel(ChatChannel):
                     logger.info("[wechatmp] file_name: {}, file_type: {} ".format(file_name, file_type))
                     # support: <2M, <60s, AMR\MP3
                     response = self.client.media.upload("voice", (file_name, open(file_path, "rb"), file_type))
-                    logger.debug("[wechatmp] upload voice response: {}".format(response))
+                    logger.notice("[wechatmp] upload voice response: {}".format(response))
                 except WeChatClientException as e:
                     logger.error("[wechatmp] upload voice failed: {}".format(e))
                     return
@@ -182,7 +182,7 @@ class WechatMPChannel(ChatChannel):
                 content_type = "image/" + image_type
                 try:
                     response = self.client.media.upload("image", (filename, image_storage, content_type))
-                    logger.debug("[wechatmp] upload image response: {}".format(response))
+                    logger.notice("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:
                     logger.error("[wechatmp] upload image failed: {}".format(e))
                     return
@@ -196,7 +196,7 @@ class WechatMPChannel(ChatChannel):
                 content_type = "image/" + image_type
                 try:
                     response = self.client.media.upload("image", (filename, image_storage, content_type))
-                    logger.debug("[wechatmp] upload image response: {}".format(response))
+                    logger.notice("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:
                     logger.error("[wechatmp] upload image failed: {}".format(e))
                     return
@@ -205,7 +205,7 @@ class WechatMPChannel(ChatChannel):
         return
 
     def _success_callback(self, session_id, context, **kwargs):  # 线程异常结束时的回调函数
-        logger.debug("[wechatmp] Success to generate reply, msgId={}".format(context["msg"].msg_id))
+        logger.notice("[wechatmp] Success to generate reply, msgId={}".format(context["msg"].msg_id))
         if self.passive_reply:
             self.running.remove(session_id)
 

@@ -72,7 +72,7 @@ class WechatComAppChannel(ChatChannel):
                     logger.info("[wechatcom] voice too long {}s > 60s , split into {} parts".format(duration / 1000.0, len(files)))
                 for path in files:
                     response = self.client.media.upload("voice", open(path, "rb"))
-                    logger.debug("[wechatcom] upload voice response: {}".format(response))
+                    logger.notice("[wechatcom] upload voice response: {}".format(response))
                     media_ids.append(response["media_id"])
             except WeChatClientException as e:
                 logger.error("[wechatcom] upload voice failed: {}".format(e))
@@ -100,7 +100,7 @@ class WechatComAppChannel(ChatChannel):
             image_storage.seek(0)
             try:
                 response = self.client.media.upload("image", image_storage)
-                logger.debug("[wechatcom] upload image response: {}".format(response))
+                logger.notice("[wechatcom] upload image response: {}".format(response))
             except WeChatClientException as e:
                 logger.error("[wechatcom] upload image failed: {}".format(e))
                 return
@@ -116,7 +116,7 @@ class WechatComAppChannel(ChatChannel):
             image_storage.seek(0)
             try:
                 response = self.client.media.upload("image", image_storage)
-                logger.debug("[wechatcom] upload image response: {}".format(response))
+                logger.notice("[wechatcom] upload image response: {}".format(response))
             except WeChatClientException as e:
                 logger.error("[wechatcom] upload image failed: {}".format(e))
                 return
@@ -151,7 +151,7 @@ class Query:
         except (InvalidSignatureException, InvalidCorpIdException):
             raise web.Forbidden()
         msg = parse_message(message)
-        logger.debug("[wechatcom] receive message: {}, msg= {}".format(message, msg))
+        logger.notice("[wechatcom] receive message: {}, msg= {}".format(message, msg))
         if msg.type == "event":
             if msg.event == "subscribe":
                 reply_content = subscribe_msg()
@@ -163,7 +163,7 @@ class Query:
             try:
                 wechatcom_msg = WechatComAppMessage(msg, client=channel.client)
             except NotImplementedError as e:
-                logger.debug("[wechatcom] " + str(e))
+                logger.notice("[wechatcom] " + str(e))
                 return "success"
             context = channel._compose_context(
                 wechatcom_msg.ctype,

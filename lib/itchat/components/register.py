@@ -95,7 +95,7 @@ def run(self, debug=False, blockThread=True):
             if self.useHotReload:
                 self.dump_login_status()
             self.alive = False
-            logger.debug('itchat received an ^C and exit.')
+            logger.notice('itchat received an ^C and exit.')
             logger.info('Bye~')
     if blockThread:
         reply_fn()

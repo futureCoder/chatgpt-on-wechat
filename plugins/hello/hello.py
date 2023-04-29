@@ -45,7 +45,7 @@ class Hello(Plugin):
             return
 
         content = e_context["context"].content
-        logger.debug("[Hello] on_handle_context. content: %s" % content)
+        logger.notice("[Hello] on_handle_context. content: %s" % content)
         if content == "Hello":
             reply = Reply()
             reply.type = ReplyType.TEXT

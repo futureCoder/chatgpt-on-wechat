@@ -21,7 +21,7 @@ class Message(AttributeDict):
     def __getitem__(self, value):
         if value in ('isAdmin', 'isAt'):
             v = value[0].upper() + value[1:] # ''[1:] == ''
-            logger.debug('%s is expired in 1.3.0, use %s instead.' % (value, v))
+            logger.notice('%s is expired in 1.3.0, use %s instead.' % (value, v))
             value = v
         return super(Message, self).__getitem__(value)
     def __str__(self):

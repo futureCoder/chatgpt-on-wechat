@@ -219,10 +219,10 @@ def update_local_uin(core, msg):
                     if userDicts.get('Uin', 0) == 0:
                         userDicts['Uin'] = uin
                         usernameChangedList.append(username)
-                        logger.debug('Uin fetched: %s, %s' % (username, uin))
+                        logger.notice('Uin fetched: %s, %s' % (username, uin))
                     else:
                         if userDicts['Uin'] != uin:
-                            logger.debug('Uin changed: %s, %s' % (
+                            logger.notice('Uin changed: %s, %s' % (
                                 userDicts['Uin'], uin))
                 else:
                     if '@@' in username:
@@ -253,13 +253,13 @@ def update_local_uin(core, msg):
                         else:
                             newFriendDict['Uin'] = uin
                     usernameChangedList.append(username)
-                    logger.debug('Uin fetched: %s, %s' % (username, uin))
+                    logger.notice('Uin fetched: %s, %s' % (username, uin))
         else:
-            logger.debug('Wrong length of uins & usernames: %s, %s' % (
+            logger.notice('Wrong length of uins & usernames: %s, %s' % (
                 len(uins), len(usernames)))
     else:
-        logger.debug('No uins in 51 message')
-        logger.debug(msg['Content'])
+        logger.notice('No uins in 51 message')
+        logger.notice(msg['Content'])
     return r
 
 def get_contact(self, update=False):

@@ -70,7 +70,7 @@ class Dungeon(Plugin):
         content = e_context["context"].content[:]
         clist = e_context["context"].content.split(maxsplit=1)
         sessionid = e_context["context"]["session_id"]
-        logger.debug("[Dungeon] on_handle_context. content: %s" % clist)
+        logger.notice("[Dungeon] on_handle_context. content: %s" % clist)
         trigger_prefix = conf().get("plugin_trigger_prefix", "$")
         if clist[0] == f"{trigger_prefix}停止冒险":
             if sessionid in self.games:

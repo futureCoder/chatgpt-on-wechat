@@ -36,7 +36,7 @@ class OpenAISession(Session):
             precise = False
             if cur_tokens is None:
                 raise e
-            logger.debug("Exception when counting tokens precisely for query: {}".format(e))
+            logger.notice("Exception when counting tokens precisely for query: {}".format(e))
         while cur_tokens > max_tokens:
             if len(self.messages) > 1:
                 self.messages.pop(0)
@@ -51,7 +51,7 @@ class OpenAISession(Session):
                 logger.warn("user question exceed max_tokens. total_tokens={}".format(cur_tokens))
                 break
             else:
-                logger.debug("max_tokens={}, total_tokens={}, len(conversation)={}".format(max_tokens, cur_tokens, len(self.messages)))
+                logger.notice("max_tokens={}, total_tokens={}, len(conversation)={}".format(max_tokens, cur_tokens, len(self.messages)))
                 break
             if precise:
                 cur_tokens = self.calc_tokens()

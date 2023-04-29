@@ -65,28 +65,28 @@ class Tool(Plugin):
             e_context.action = EventAction.CONTINUE
             return
 
-        logger.debug("[tool] on_handle_context. content: %s" % content)
+        logger.notice("[tool] on_handle_context. content: %s" % content)
         reply = Reply()
         reply.type = ReplyType.TEXT
         trigger_prefix = conf().get("plugin_trigger_prefix", "$")
         # todo: 有些工具必须要api-key，需要修改config文件，所以这里没有实现query增删tool的功能
         if content.startswith(f"{trigger_prefix}tool"):
             if len(content_list) == 1:
-                logger.debug("[tool]: get help")
+                logger.notice("[tool]: get help")
                 reply.content = self.get_help_text()
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
                 return
             elif len(content_list) > 1:
                 if content_list[1].strip() == "reset":
-                    logger.debug("[tool]: reset config")
+                    logger.notice("[tool]: reset config")
                     self.app = self._reset_app()
                     reply.content = "重置工具成功"
                     e_context["reply"] = reply
                     e_context.action = EventAction.BREAK_PASS
                     return
                 elif content_list[1].startswith("reset"):
-                    logger.debug("[tool]: remind")
+                    logger.notice("[tool]: remind")
                     e_context["context"].content = "请你随机用一种聊天风格，提醒用户：如果想重置tool插件，reset之后不要加任何字符"
 
                     e_context.action = EventAction.BREAK
@@ -99,7 +99,7 @@ class Tool(Plugin):
                 user_session = all_sessions.session_query(query, e_context["context"]["session_id"]).messages
 
                 # chatgpt-tool-hub will reply you with many tools
-                logger.debug("[tool]: just-go")
+                logger.notice("[tool]: just-go")
                 try:
                     _reply = self.app.ask(query, user_session)
                     e_context.action = EventAction.BREAK_PASS

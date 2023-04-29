@@ -29,13 +29,13 @@ class Query:
             message = web.data()
             encrypt_func = lambda x: x
             if args.get("encrypt_type") == "aes":
-                logger.debug("[wechatmp] Receive encrypted post data:\n" + message.decode("utf-8"))
+                logger.notice("[wechatmp] Receive encrypted post data:\n" + message.decode("utf-8"))
                 if not channel.crypto:
                     raise Exception("Crypto not initialized, Please set wechatmp_aes_key in config.json")
                 message = channel.crypto.decrypt_message(message, args.msg_signature, args.timestamp, args.nonce)
                 encrypt_func = lambda x: channel.crypto.encrypt_message(x, args.nonce, args.timestamp)
             else:
-                logger.debug("[wechatmp] Receive post data:\n" + message.decode("utf-8"))
+                logger.notice("[wechatmp] Receive post data:\n" + message.decode("utf-8"))
             msg = parse_message(message)
             if msg.type in ["text", "voice", "image"]:
                 wechatmp_msg = WeChatMPMessage(msg, client=channel.client)
@@ -59,7 +59,7 @@ class Query:
                         context = channel._compose_context(wechatmp_msg.ctype, content, isgroup=False, desire_rtype=ReplyType.VOICE, msg=wechatmp_msg)
                     else:
                         context = channel._compose_context(wechatmp_msg.ctype, content, isgroup=False, msg=wechatmp_msg)
-                    logger.debug("[wechatmp] context: {} {} {}".format(context, wechatmp_msg, supported))
+                    logger.notice("[wechatmp] context: {} {} {}".format(context, wechatmp_msg, supported))
 
                     if supported and context:
                         channel.running.add(from_user)

@@ -16,7 +16,7 @@ class OpenaiVoice(Voice):
         openai.api_key = conf().get("open_ai_api_key")
 
     def voiceToText(self, voice_file):
-        logger.debug("[Openai] voice file name={}".format(voice_file))
+        logger.notice("[Openai] voice file name={}".format(voice_file))
         try:
             file = open(voice_file, "rb")
             result = openai.Audio.transcribe("whisper-1", file)

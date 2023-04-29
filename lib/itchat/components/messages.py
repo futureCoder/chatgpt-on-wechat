@@ -216,7 +216,7 @@ def produce_msg(core, msgList):
                 'Type': 'Useless',
                 'Text': 'UselessMsg', }
         else:
-            logger.debug('Useless message received: %s\n%s' % (m['MsgType'], str(m)))
+            logger.notice('Useless message received: %s\n%s' % (m['MsgType'], str(m)))
             msg = {
                 'Type': 'Useless',
                 'Text': 'UselessMsg', }
@@ -247,7 +247,7 @@ def produce_group_chat(core, msg):
         member = utils.search_dict_list((chatroom or {}).get(
             'MemberList') or [], 'UserName', actualUserName)
     if member is None:
-        logger.debug('chatroom member fetch failed with %s' % actualUserName)
+        logger.notice('chatroom member fetch failed with %s' % actualUserName)
         msg['ActualNickName'] = ''
         msg['IsAt'] = False
     else:
@@ -279,7 +279,7 @@ def send_raw_msg(self, msgType, content, toUserName):
     return ReturnValue(rawResponse=r)
 
 def send_msg(self, msg='Test Message', toUserName=None):
-    logger.debug('Request to send a text message to %s: %s' % (toUserName, msg))
+    logger.notice('Request to send a text message to %s: %s' % (toUserName, msg))
     r = self.send_raw_msg(1, msg, toUserName)
     return r
 
@@ -306,7 +306,7 @@ def _prepare_file(fileDir, file_=None):
 
 def upload_file(self, fileDir, isPicture=False, isVideo=False,
         toUserName='filehelper', file_=None, preparedFile=None):
-    logger.debug('Request to upload a %s: %s' % (
+    logger.notice('Request to upload a %s: %s' % (
         'picture' if isPicture else 'video' if isVideo else 'file', fileDir))
     if not preparedFile:
         preparedFile = _prepare_file(fileDir, file_)
@@ -367,7 +367,7 @@ def upload_chunk_file(core, fileDir, fileSymbol, fileSize,
     return core.s.post(url, files=files, headers=headers, timeout=config.TIMEOUT)
 
 def send_file(self, fileDir, toUserName=None, mediaId=None, file_=None):
-    logger.debug('Request to send a file(mediaId: %s) to %s: %s' % (
+    logger.notice('Request to send a file(mediaId: %s) to %s: %s' % (
         mediaId, toUserName, fileDir))
     if hasattr(fileDir, 'read'):
         return ReturnValue({'BaseResponse': {
@@ -407,7 +407,7 @@ def send_file(self, fileDir, toUserName=None, mediaId=None, file_=None):
     return ReturnValue(rawResponse=r)
 
 def send_image(self, fileDir=None, toUserName=None, mediaId=None, file_=None):
-    logger.debug('Request to send a image(mediaId: %s) to %s: %s' % (
+    logger.notice('Request to send a image(mediaId: %s) to %s: %s' % (
         mediaId, toUserName, fileDir))
     if fileDir or file_:
         if hasattr(fileDir, 'read'):
@@ -449,7 +449,7 @@ def send_image(self, fileDir=None, toUserName=None, mediaId=None, file_=None):
     return ReturnValue(rawResponse=r)
 
 def send_video(self, fileDir=None, toUserName=None, mediaId=None, file_=None):
-    logger.debug('Request to send a video(mediaId: %s) to %s: %s' % (
+    logger.notice('Request to send a video(mediaId: %s) to %s: %s' % (
         mediaId, toUserName, fileDir))
     if fileDir or file_:
         if hasattr(fileDir, 'read'):

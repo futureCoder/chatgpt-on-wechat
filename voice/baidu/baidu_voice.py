@@ -60,7 +60,7 @@ class BaiduVoice(Voice):
 
     def voiceToText(self, voice_file):
         # 识别本地文件
-        logger.debug("[Baidu] voice file name={}".format(voice_file))
+        logger.notice("[Baidu] voice file name={}".format(voice_file))
         pcm = get_pcm_from_wav(voice_file)
         res = self.client.asr(pcm, "pcm", 16000, {"dev_pid": self.dev_id})
         if res["err_no"] == 0:

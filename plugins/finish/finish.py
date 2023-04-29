@@ -27,7 +27,7 @@ class Finish(Plugin):
             return
 
         content = e_context["context"].content
-        logger.debug("[Finish] on_handle_context. content: %s" % content)
+        logger.notice("[Finish] on_handle_context. content: %s" % content)
         trigger_prefix = conf().get("plugin_trigger_prefix", "$")
         if content.startswith(trigger_prefix):
             reply = Reply()

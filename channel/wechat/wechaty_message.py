@@ -82,7 +82,7 @@ class WechatyMessage(ChatMessage, aobject):
                 name = wechaty_msg.wechaty.user_self().name
                 pattern = f"@{re.escape(name)}(\u2005|\u0020)"
                 if re.search(pattern, self.content):
-                    logger.debug(f"wechaty message {self.msg_id} include at")
+                    logger.notice(f"wechaty message {self.msg_id} include at")
                     self.is_at = True
 
             self.actual_user_id = self.from_user_id

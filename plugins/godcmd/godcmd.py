@@ -203,7 +203,7 @@ class Godcmd(Plugin):
             return
 
         content = e_context["context"].content
-        logger.debug("[Godcmd] on_handle_context. content: %s" % content)
+        logger.notice("[Godcmd] on_handle_context. content: %s" % content)
         if content.startswith("#"):
             if len(content) == 1:
                 reply = Reply()
@@ -271,7 +271,7 @@ class Godcmd(Plugin):
                         ok, result = True, "会话已重置"
                     else:
                         ok, result = False, "当前对话机器人不支持重置会话"
-                logger.debug("[Godcmd] command: %s by %s" % (cmd, user))
+                logger.notice("[Godcmd] command: %s by %s" % (cmd, user))
             elif any(cmd in info["alias"] for info in ADMIN_COMMANDS.values()):
                 if isadmin:
                     if isgroup:
@@ -363,7 +363,7 @@ class Godcmd(Plugin):
                                 ok, result = False, "请提供插件名"
                             else:
                                 ok, result = PluginManager().update_plugin(args[0])
-                        logger.debug("[Godcmd] admin command: %s by %s" % (cmd, user))
+                        logger.notice("[Godcmd] admin command: %s by %s" % (cmd, user))
                 else:
                     ok, result = False, "需要管理员权限才能执行该指令"
             else:

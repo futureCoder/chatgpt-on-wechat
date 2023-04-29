@@ -59,7 +59,7 @@ class Role(Plugin):
                         self.tags[tag][1].append(role)
                 for tag in list(self.tags.keys()):
                     if len(self.tags[tag][1]) == 0:
-                        logger.debug(f"[Role] no role found for tag {tag} ")
+                        logger.notice(f"[Role] no role found for tag {tag} ")
                         del self.tags[tag]
 
             if len(self.roles) == 0:
@@ -150,7 +150,7 @@ class Role(Plugin):
             return
         elif sessionid not in self.roleplays:
             return
-        logger.debug("[Role] on_handle_context. content: %s" % content)
+        logger.notice("[Role] on_handle_context. content: %s" % content)
         if desckey is not None:
             if len(clist) == 1 or (len(clist) > 1 and clist[1].lower() in ["help", "帮助"]):
                 reply = Reply(ReplyType.INFO, self.get_help_text(verbose=True))

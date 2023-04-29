@@ -52,11 +52,11 @@ class BDunit(Plugin):
             return
 
         content = e_context["context"].content
-        logger.debug("[BDunit] on_handle_context. content: %s" % content)
+        logger.notice("[BDunit] on_handle_context. content: %s" % content)
         parsed = self.getUnit2(content)
         intent = self.getIntent(parsed)
         if intent:  # 找到意图
-            logger.debug("[BDunit] Baidu_AI Intent= %s", intent)
+            logger.notice("[BDunit] Baidu_AI Intent= %s", intent)
             reply = Reply()
             reply.type = ReplyType.TEXT
             reply.content = self.getSay(parsed)

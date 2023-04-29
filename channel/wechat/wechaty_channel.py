@@ -114,12 +114,12 @@ class WechatyChannel(ChatChannel):
         try:
             cmsg = await WechatyMessage(msg)
         except NotImplementedError as e:
-            logger.debug("[WX] {}".format(e))
+            logger.notice("[WX] {}".format(e))
             return
         except Exception as e:
             logger.exception("[WX] {}".format(e))
             return
-        logger.debug("[WX] message:{}".format(cmsg))
+        logger.notice("[WX] message:{}".format(cmsg))
         room = msg.room()  # 获取消息来自的群聊. 如果消息不是来自群聊, 则返回None
         isgroup = room is not None
         ctype = cmsg.ctype

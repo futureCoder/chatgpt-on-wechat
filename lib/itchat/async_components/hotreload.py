@@ -30,7 +30,7 @@ async def dump_login_status(self, fileDir=None):
         'storage'   : self.storageClass.dumps()}
     with open(fileDir, 'wb') as f:
         pickle.dump(status, f)
-    logger.debug('Dump login status for hot reload successfully.')
+    logger.notice('Dump login status for hot reload successfully.')
 
 async def load_login_status(self, fileDir,
         loginCallback=None, exitCallback=None):
@@ -38,13 +38,13 @@ async def load_login_status(self, fileDir,
         with open(fileDir, 'rb') as f:
             j = pickle.load(f)
     except Exception as e:
-        logger.debug('No such file, loading login status failed.')
+        logger.notice('No such file, loading login status failed.')
         return ReturnValue({'BaseResponse': {
             'ErrMsg': 'No such file, loading login status failed.',
             'Ret': -1002, }})
 
     if j.get('version', '') != VERSION:
-        logger.debug(('you have updated itchat from %s to %s, ' +
+        logger.notice(('you have updated itchat from %s to %s, ' +
             'so cached status is ignored') % (
             j.get('version', 'old version'), VERSION))
         return ReturnValue({'BaseResponse': {
@@ -62,7 +62,7 @@ async def load_login_status(self, fileDir,
     if (msgList or contactList) is None:
         self.logout()
         await load_last_login_status(self.s, j['cookies'])
-        logger.debug('server refused, loading login status failed.')
+        logger.notice('server refused, loading login status failed.')
         return ReturnValue({'BaseResponse': {
             'ErrMsg': 'server refused, loading login status failed.',
             'Ret': -1003, }})
@@ -77,7 +77,7 @@ async def load_login_status(self, fileDir,
             msgList = produce_msg(self, msgList)
             for msg in msgList: self.msgList.put(msg)
         await self.start_receiving(exitCallback)
-        logger.debug('loading login status succeeded.')
+        logger.notice('loading login status succeeded.')
         if hasattr(loginCallback, '__call__'):
             await loginCallback(self.storageClass.userName)
         return ReturnValue({'BaseResponse': {

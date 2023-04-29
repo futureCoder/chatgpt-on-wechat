@@ -61,7 +61,7 @@ class Banwords(Plugin):
             return
 
         content = e_context["context"].content
-        logger.debug("[Banwords] on_handle_context. content: %s" % content)
+        logger.notice("[Banwords] on_handle_context. content: %s" % content)
         if self.action == "ignore":
             f = self.searchr.FindFirst(content)
             if f:

@@ -150,7 +150,7 @@ class PluginManager:
         self.load_config()
         self.scan_plugins()
         pconf = self.pconf
-        logger.debug("plugins.json config={}".format(pconf))
+        logger.notice("plugins.json config={}".format(pconf))
         for name, plugin in pconf["plugins"].items():
             if name.upper() not in self.plugins:
                 logger.error("Plugin %s not found, but found in plugins.json" % name)
@@ -160,7 +160,7 @@ class PluginManager:
         if e_context.event in self.listening_plugins:
             for name in self.listening_plugins[e_context.event]:
                 if self.plugins[name].enabled and e_context.action == EventAction.CONTINUE:
-                    logger.debug("Plugin %s triggered by event %s" % (name, e_context.event))
+                    logger.notice("Plugin %s triggered by event %s" % (name, e_context.event))
                     instance = self.instances[name]
                     instance.handlers[e_context.event](e_context, *args, **kwargs)
         return e_context

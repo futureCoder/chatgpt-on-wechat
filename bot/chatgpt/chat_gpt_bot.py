@@ -1,6 +1,7 @@
 # encoding:utf-8
 
 import time
+import traceback
 
 import openai
 import openai.error
@@ -44,6 +45,9 @@ class ChatGPTBot(Bot, OpenAIImage):
         }
 
     def reply(self, query, context=None):
+        # 保存函数调用栈到str
+        stack = traceback.format_stack()
+        logger.info("caller stack{}".format(stack))
         # acquire reply content
         if context.type == ContextType.TEXT:
             logger.info("[CHATGPT] query={}".format(query))
@@ -63,7 +67,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             if reply:
                 return reply
             session = self.sessions.session_query(query, session_id)
-            logger.debug("[CHATGPT] session query={}".format(session.messages))
+            logger.notice("[CHATGPT] session query={}".format(session.messages))
 
             api_key = context.get("openai_api_key")
 
@@ -72,7 +76,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     return self.reply_text_stream(query, new_query, session_id)
 
             reply_content = self.reply_text(session, api_key)
-            logger.debug(
+            logger.notice(
                 "[CHATGPT] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(
                     session.messages,
                     session_id,
@@ -87,7 +91,7 @@ class ChatGPTBot(Bot, OpenAIImage):
                 reply = Reply(ReplyType.TEXT, reply_content["content"])
             else:
                 reply = Reply(ReplyType.ERROR, reply_content["content"])
-                logger.debug("[CHATGPT] reply {} used 0 tokens.".format(reply_content))
+                logger.notice("[CHATGPT] reply {} used 0 tokens.".format(reply_content))
             return reply
 
         elif context.type == ContextType.IMAGE_CREATE:

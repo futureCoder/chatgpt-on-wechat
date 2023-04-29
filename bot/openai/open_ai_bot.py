@@ -62,7 +62,7 @@ class OpenAIBot(Bot, OpenAIImage):
                         result["completion_tokens"],
                         result["content"],
                     )
-                    logger.debug(
+                    logger.notice(
                         "[OPEN_AI] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(str(session), session_id, reply_content, completion_tokens)
                     )
 
