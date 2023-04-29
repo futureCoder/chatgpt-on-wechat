@@ -34,6 +34,7 @@ def run():
 
         # create channel
         channel_name = conf().get("channel_type", "wx")
+        logger.info("channel type: {}".format(channel_name))
 
         if "--cmd" in sys.argv:
             channel_name = "terminal"

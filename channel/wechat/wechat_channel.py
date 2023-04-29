@@ -28,6 +28,8 @@ from plugins import *
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE])
 def handler_single_msg(msg):
+    if msg and msg.ctype:
+        logger.debug("[WX]receive single msg: {}, cmsg={}".format(msg.content, msg))
     try:
         cmsg = WechatMessage(msg, False)
     except NotImplementedError as e:
@@ -39,6 +41,8 @@ def handler_single_msg(msg):
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE], isGroupChat=True)
 def handler_group_msg(msg):
+    if msg and msg.ctype:
+        logger.debug("[WX]receive group msg: {}, cmsg={}".format(msg.content, msg))
     try:
         cmsg = WechatMessage(msg, True)
     except NotImplementedError as e:
@@ -140,8 +144,10 @@ class WechatChannel(ChatChannel):
     @time_checker
     @_check
     def handle_single(self, cmsg: ChatMessage):
+        if cmsg and cmsg.ctype:
+            logger.debug("[WX]receive single msg: {}, cmsg={}".format(cmsg.content, cmsg))
         if cmsg.ctype == ContextType.VOICE:
-            if conf().get("speech_recognition") != True:
+            if not conf().get("speech_recognition"):
                 return
             logger.debug("[WX]receive voice msg: {}".format(cmsg.content))
         elif cmsg.ctype == ContextType.IMAGE:
@@ -159,8 +165,10 @@ class WechatChannel(ChatChannel):
     @time_checker
     @_check
     def handle_group(self, cmsg: ChatMessage):
+        if cmsg and cmsg.ctype:
+            logger.debug("[WX]receive group msg: {}, cmsg={}".format(cmsg.content, cmsg))
         if cmsg.ctype == ContextType.VOICE:
-            if conf().get("speech_recognition") != True:
+            if not conf().get("speech_recognition"):
                 return
             logger.debug("[WX]receive voice for group msg: {}".format(cmsg.content))
         elif cmsg.ctype == ContextType.IMAGE:
