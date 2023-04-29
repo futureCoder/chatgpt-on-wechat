@@ -37,6 +37,7 @@ class ChatChannel(Channel):
     def _compose_context(self, ctype: ContextType, content, **kwargs):
         context = Context(ctype, content)
         context.kwargs = kwargs
+        logger.notice("message context: {}".format(context))
         # context首次传入时，origin_ctype是None,
         # 引入的起因是：当输入语音时，会嵌套生成两个context，第一步语音转文本，第二步通过文本生成文字回复。
         # origin_ctype用于第二步文本回复时，判断是否需要匹配前缀，如果是私聊的语音，就不需要匹配前缀
@@ -73,7 +74,7 @@ class ChatChannel(Channel):
                     ):
                         session_id = group_id
                 else:
-                    logger.warn("return due to no group_chat_in_one_session matched: {}".format(group_name))
+                    logger.notice("return due to no group_chat_in_one_session matched: {}".format(group_name))
                     return None
                 context["session_id"] = session_id
                 context["receiver"] = group_id
@@ -89,6 +90,8 @@ class ChatChannel(Channel):
                 return None
 
         # 消息内容匹配过程，并处理content
+        logger.notice("process message")
+        logger.notice("message context: {}".format(context))
         if ctype == ContextType.TEXT:
             if first_in and "」\n- - - - - - -" in content:  # 初次匹配 过滤引用消息
                 logger.debug("[WX]reference query skipped")
