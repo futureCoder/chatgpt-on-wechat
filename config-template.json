@@ -10,12 +10,10 @@
   "group_chat_prefix": [
     "@Jason"
   ],
-  "group_name_white_list": [
+  "group_name_white_list": ["ALL_GROUP"],
+  "group_chat_in_one_session": [
     "全村的希望",
     "一家人"
-  ],
-  "group_chat_in_one_session": [
-    "全村的希望"
   ],
   "image_create_prefix": [
     "画",
