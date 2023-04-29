@@ -73,6 +73,7 @@ class ChatChannel(Channel):
                     ):
                         session_id = group_id
                 else:
+                    logger.warn("return due to no group_chat_in_one_session matched: {}".format(group_name))
                     return None
                 context["session_id"] = session_id
                 context["receiver"] = group_id
