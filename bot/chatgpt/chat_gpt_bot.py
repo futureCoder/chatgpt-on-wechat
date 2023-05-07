@@ -70,7 +70,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             logger.notice("[CHATGPT] session query={}".format(session.messages))
 
             api_key = context.get("openai_api_key")
-
+            self.args['model'] = context.get('gpt_model') or "gpt-3.5-turbo"
             # if context.get('stream'):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
