@@ -19,6 +19,7 @@ class LinkAIBot(Bot, OpenAIImage):
     NO_QUOTA_CODE = 406
 
     def __init__(self):
+        super().__init__()
         self.base_url = "https://api.link-ai.chat/v1"
         self.sessions = SessionManager(ChatGPTSession, model=conf().get("model") or "gpt-3.5-turbo")
 
