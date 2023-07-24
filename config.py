@@ -19,6 +19,7 @@ available_setting = {
     "model": "gpt-3.5-turbo",
     "use_azure_chatgpt": False,  # 是否使用azure的chatgpt
     "azure_deployment_id": "",  # azure 模型部署名称
+    "azure_api_version": "",  # azure api版本
     "use_baidu_wenxin": False,  # 是否使用baidu文心一言，优先级次于azure
     # Bot触发配置
     "single_chat_prefix": ["bot", "@bot"],  # 私聊时文本需要包含该前缀才能触发机器人回复
