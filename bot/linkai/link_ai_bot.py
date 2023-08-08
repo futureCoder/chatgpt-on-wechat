@@ -62,10 +62,11 @@ class LinkAIBot(Bot, OpenAIImage):
             session_id = context["session_id"]
 
             session = self.sessions.session_query(query, session_id)
-
+            model = conf().get("model") or "gpt-3.5-turbo"
             # remove system message
-            if app_code and session.messages[0].get("role") == "system":
-                session.messages.pop(0)
+            if session.messages[0].get("role") == "system":
+                if app_code or model == "wenxin":
+                    session.messages.pop(0)
 
 
             logger.info(f"[LINKAI] query={query}, app_code={app_code}")
@@ -73,7 +74,11 @@ class LinkAIBot(Bot, OpenAIImage):
             body = {
                 "app_code": app_code,
                 "messages": session.messages,
-                "temperature": conf().get("temperature")
+                "model": model,     # 对话模型的名称, 支持 gpt-3.5-turbo, gpt-3.5-turbo-16k, gpt-4, wenxin
+                "temperature": conf().get("temperature"),
+                "top_p": conf().get("top_p", 1),
+                "frequency_penalty": conf().get("frequency_penalty", 0.0),  # [-2,2]之间，该值越大则更倾向于产生不同的内容
+                "presence_penalty": conf().get("presence_penalty", 0.0),  # [-2,2]之间，该值越大则更倾向于产生不同的内容
             }
             logger.info(f"[LINKAI] query={query}, app_code={app_code}, mode={body.get('model')}")
             headers = {"Authorization": "Bearer " + linkai_api_key}
