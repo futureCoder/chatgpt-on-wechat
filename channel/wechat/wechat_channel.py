@@ -112,7 +112,7 @@ class WechatChannel(ChatChannel):
 
     def __init__(self):
         super().__init__()
-        self.receivedMsgs = ExpiredDict(60 * 60)
+        self.receivedMsgs = ExpiredDict(60 * 60)  # 1小时过期
 
     def startup(self):
         itchat.instance.receivingRetryCount = 600  # 修改断线超时时间
@@ -167,8 +167,8 @@ class WechatChannel(ChatChannel):
     @time_checker
     @_check
     def handle_group(self, cmsg: ChatMessage):
-        # if cmsg.ctype == ContextType.VOICE:
-        #     if not conf().get("group_speech_recognition"):
+        if cmsg.ctype == ContextType.VOICE:
+            if not conf().get("group_speech_recognition"):
                 return
             logger.debug("[WX]receive voice for group msg: {}".format(cmsg.content))
         elif cmsg.ctype == ContextType.IMAGE:
